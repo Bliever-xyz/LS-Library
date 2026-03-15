@@ -427,7 +427,7 @@ while (x > LN_2) {
 ```
 After this loop, `x ∈ [0, LN_2)` and `shift = floor(x_original / LN_2)`. `shift` counts how many times we need to double the result.
 
-**Step 3 — Taylor series for `e^r` where `r ∈ [0, ln2)`:**
+**Step 3 — Taylor series for `e^r` where `r ∈ [0, LN_2]`:**
 ```solidity
 uint256 sum = SCALE;    // term 0: e⁰ = 1
 uint256 term = SCALE;   // current term, starts at x⁰/0! = 1
