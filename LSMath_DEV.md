@@ -89,7 +89,6 @@ All errors are custom (`error` keyword, Solidity 0.8.4+). Each encodes as a 4-by
 | `EmptyQuantities()` | `liquidityParameter`, `calculateWorstCaseLoss`, `hasOutcomeIndependentProfit` | `quantities.length == 0` |
 | `NegativeQuantity()` | (reserved) | Declared but not currently thrown; `uint256` type enforces non-negativity by construction |
 | `ZeroQuantitySum()` | `liquidityParameter` | `Σqᵢ == 0` (all quantities are zero) |
-| `InvalidOutcomeIndex()` | `getPrice`, `calculateTradeCost` | `outcomeIndex >= quantities.length` or mismatched array lengths |
 | `ArithmeticOverflow()` | `liquidityParameter`, `costFunction`, `getAllPrices`, `sumOfPrices`, `calculateTradeCost` | Integer overflow detected in accumulation |
 | `MultiplicationOverflow()` | `mulScale`, `divScale` | `a * b` overflows `uint256` (detected via division check) |
 | `DivisionByZero()` | `divScale` | `b == 0` passed as denominator |
