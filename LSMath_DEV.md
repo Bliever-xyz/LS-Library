@@ -554,7 +554,7 @@ function mulScale(uint256 a, uint256 b) internal pure returns (uint256 result) {
 
 **Zero short-circuit:** Returns 0 immediately for either zero operand. Without this, `a * b = 0` would pass the overflow check (since `0 / a = 0` which happens to equal `b` only if `b = 0` — but actually `0 / a == 0 != b` for any non-zero `b`). The zero check is correct behavior and avoids the edge case.
 
-**Overflow detection:** `product / a != b` detects if `a * b` wrapped. This works because if `a * b` overflows uint256, the wrapped result divided by `a` cannot equal `b`. (This is the standard "Solmate overflow check" pattern.)
+**Overflow detection:** `product / a != b` detects if `a * b` wrapped. overflow protection in mulScale comes from Solidity 0.8.x's built-in checked arithmetic (the multiplication itself panics). The post-multiplication division check is redundant but harmless.
 
 **Rounding:** `(product + SCALE/2) / SCALE` rounds to nearest. The `SCALE/2 = 5e17` addend shifts the truncation boundary by half an ULP.
 
