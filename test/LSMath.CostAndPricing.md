@@ -201,6 +201,18 @@ The 80-outcome large market test is the primary regression guard for **Fix 1** i
 
 ---
 
+### Multi-Outcome Tests (n > 2)
+
+All happy-path and fuzz tests above use binary markets. These three tests confirm both functions behave correctly when `n = 5`.
+
+| Test | Scenario | Assertion |
+|---|---|---|
+| `test_calculateTradeCostDetailed_five_outcome_consistency` | 5-way market, buy on outcome 2 | `tradeCost` and `costTo` match reference functions |
+| `test_calculateWorstCaseLossFromCosts_five_outcome_consistency` | 5-way market, dominant on outcome 3 | `fromCosts == calculateWorstCaseLoss`; confirms maxQ scan across all 5 elements |
+| `test_multi_outcome_integration_workflow` | 5-way market, full LP vault call pattern | `calculateTradeCostDetailed → calculateWorstCaseLossFromCosts` matches `calculateWorstCaseLoss` |
+
+---
+
 ## Debugging Tips
 
 - **Large market test reverts with `ExponentialOverflow`** → the Log-Sum-Exp stabilization (`maxRatio` subtraction before `exp()`) is missing or incorrectly applied in either `costFunction` or `getAllPrices`.
