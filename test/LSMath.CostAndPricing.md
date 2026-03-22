@@ -1,6 +1,6 @@
 # LSMath.CostAndPricing.t.sol — Test Documentation
 
-**Tests:** `costFunction()`, `getPrice()`, `getAllPrices()`, `sumOfPrices()`  
+**Tests:** `costFunction()`, `getPrice()`, `getAllPrices()`, `sumOfPrices()`, `calculateTradeCostDetailed()`, `calculateWorstCaseLossFromCosts()`  
 **File:** `contractes/test/LSMath/LSMath.CostAndPricing.t.sol`
 
 ---
@@ -12,6 +12,8 @@ These functions implement the core LS-LMSR equations visible to market participa
 - `costFunction` — the "potential field" that tracks total money in the market
 - `getAllPrices` / `getPrice` — the instantaneous price each outcome trades at
 - `sumOfPrices` — the total of all prices (always > 1, excess = market maker's fee)
+- `calculateTradeCostDetailed` — trade cost + costTo in one call (gas-optimised variant of `calculateTradeCost`)
+- `calculateWorstCaseLossFromCosts` — worst-case loss given pre-computed cost values (skips redundant `costFunction` calls)
 
 This file also contains the **numerical stability tests** for the Log-Sum-Exp trick, which is the critical safety mechanism preventing overflow in large or imbalanced markets.
 
@@ -27,6 +29,10 @@ This file also contains the **numerical stability tests** for the Log-Sum-Exp tr
 | Symmetric market → equal prices | Symmetry of `exp` | `test_getAllPrices_symmetric_market_equal_prices` |
 | Higher quantity → higher price | Monotone pricing | `test_getAllPrices_higher_quantity_higher_price` |
 | Buying increases total cost | Monotone cost | `test_costFunction_monotone_increasing_with_quantity` |
+| `tradeCost` == `calculateTradeCost` | Identical arithmetic | `test_calculateTradeCostDetailed_tradeCost_matches_calculateTradeCost`, fuzz |
+| `costTo` == `costFunction(qTo)` | Reuse correctness | `test_calculateTradeCostDetailed_costTo_matches_costFunction` |
+| `calculateWorstCaseLossFromCosts` == `calculateWorstCaseLoss` | Prop 4.9 | `test_calculateWorstCaseLossFromCosts_matches_calculateWorstCaseLoss`, fuzz |
+| Loss = 0 when market maker profitable | Prop 4.9 | `test_calculateWorstCaseLossFromCosts_zero_when_profitable` |
 
 ---
 
@@ -144,9 +150,62 @@ The 80-outcome large market test is the primary regression guard for **Fix 1** i
 
 ---
 
+---
+
+### `calculateTradeCostDetailed()` — Happy Path
+
+| Test | Scenario | Assertion |
+|---|---|---|
+| `test_calculateTradeCostDetailed_tradeCost_matches_calculateTradeCost` | `[100,100]→[150,100]`, α=5% | `tradeCost == calculateTradeCost(same inputs)` |
+| `test_calculateTradeCostDetailed_costTo_matches_costFunction` | `[80,120]→[130,120]`, α=5% | `costTo == costFunction(qTo, alpha)` |
+| `test_calculateTradeCostDetailed_positive_on_buy` | `[100,100]→[150,100]` | `tradeCost > 0` |
+| `test_calculateTradeCostDetailed_zero_on_noop` | `qFrom == qTo` | `tradeCost == 0`, `costTo == costFunction(q)` |
+
+### `calculateTradeCostDetailed()` — Revert Cases
+
+| Test | Expected Error |
+|---|---|
+| `test_calculateTradeCostDetailed_reverts_array_length_mismatch` | `InvalidOutcomeIndex` (length-2 vs length-3 arrays) |
+
+### `calculateTradeCostDetailed()` — Fuzz
+
+| Test | Properties Verified |
+|---|---|
+| `testFuzz_calculateTradeCostDetailed_consistent` | For any valid binary trade, `tradeCost` matches `calculateTradeCost` and `costTo` matches `costFunction(qTo)` |
+
+---
+
+### `calculateWorstCaseLossFromCosts()` — Happy Path
+
+| Test | Scenario | Assertion |
+|---|---|---|
+| `test_calculateWorstCaseLossFromCosts_matches_calculateWorstCaseLoss` | Real costs from `[10,10]` init, `[60,40]` current | `fromCosts == calculateWorstCaseLoss` |
+| `test_calculateWorstCaseLossFromCosts_zero_when_profitable` | `q0=[1,1]`, `q=[10000,10000]` — large surplus | `loss == 0` |
+| `test_calculateWorstCaseLossFromCosts_branch_cost_below_maxQ` | Synthetic: costCurrent=50, costInitial=20, `q=[100,30]` | `loss == 70` (costInitial + maxQ - costCurrent) |
+| `test_calculateWorstCaseLossFromCosts_correct_maxQ_selection` | Synthetic: costCurrent=210, costInitial=30, `q=[50,200,80]` | `loss == 20`; confirms maxQ=200 selected |
+| `test_calculateWorstCaseLossFromCosts_integration_with_tradeCostDetailed` | `costTo` from `calculateTradeCostDetailed` fed into loss function | matches `calculateWorstCaseLoss` |
+
+### `calculateWorstCaseLossFromCosts()` — Revert Cases
+
+| Test | Expected Error |
+|---|---|
+| `test_calculateWorstCaseLossFromCosts_reverts_empty_quantities` | `EmptyQuantities` |
+
+### `calculateWorstCaseLossFromCosts()` — Fuzz
+
+| Test | Properties Verified |
+|---|---|
+| `testFuzz_calculateWorstCaseLossFromCosts_consistent` | For any valid binary market, result with real costs equals `calculateWorstCaseLoss` |
+
+> **Synthetic cost note:** `test_calculateWorstCaseLossFromCosts_branch_cost_below_maxQ` and `_correct_maxQ_selection` pass artificial `costCurrent`/`costInitial` values directly. This is intentional — the function accepts raw pre-computed costs, and the `cost < maxQ` branch is unreachable via a live `costFunction()` call (Lemma 4.5 + safety floor), but the branch logic must still be correct for contract robustness.
+
+---
+
 ## Debugging Tips
 
 - **Large market test reverts with `ExponentialOverflow`** → the Log-Sum-Exp stabilization (`maxRatio` subtraction before `exp()`) is missing or incorrectly applied in either `costFunction` or `getAllPrices`.
 - **Symmetric prices are not equal** → the `weightedSum` or `weightedI` calculation in `getAllPrices` has a scaling error.
 - **`sumOfPrices` exceeds theoretical upper bound significantly** → `alphaTerm` is miscalculated; check the `adjustedLn` computation includes the `maxRatio` offset correctly.
 - **`C(q) < max(qi)` (Lemma 4.5 violated)** → a fundamental overflow or underflow in the cost formula; check `ln(sumExp)` is not returning too-small a value.
+- **`tradeCost` from detailed variant != `calculateTradeCost`** → the two functions diverged; confirm both use identical cost arithmetic and the same int256 overflow guards.
+- **`calculateWorstCaseLossFromCosts` != `calculateWorstCaseLoss`** → the `maxQ` scan or the surplus/loss branching logic differs; re-verify the two branches against Prop. 4.9.
