@@ -1,0 +1,8 @@
+Ran 29 tests for test/LSMath/LSMath.LiquidityParameter.t.sol:LSMathLiquidityParameterTest
+Ran 31 tests for test/LSMath/LSMath.Primitives.t.sol:LSMathPrimitivesTest
+Ran 21 tests for test/LSMath/LSMath.Trading.t.sol:LSMathTradingTest
+Ran 44 tests for test/LSMath/LSMath.CostAndPricing.t.sol:LSMathCostAndPricingTest
+| File                                  | % Lines          | % Statements      | % Branches      | % Funcs         |
+| src/LSMath.sol                        | 97.76% (218/223) | 92.80% (322/347)  | 64.71% (44/68)  | 100.00% (16/16) |
+| test/LSMath/harness/LSMathHarness.sol | 100.00% (32/32)  | 100.00% (32/32)   | 100.00% (0/0)   | 100.00% (16/16) |
+
