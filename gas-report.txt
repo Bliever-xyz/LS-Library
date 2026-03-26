@@ -1,0 +1,186 @@
+Compiling 1 files with Solc 0.8.31
+Solc 0.8.31 finished in 1.17s
+
+Ran 29 tests for test/LSMath/LSMath.LiquidityParameter.t.sol:LSMathLiquidityParameterTest
+[PASS] testFuzz_liquidityParameter_formula_holds(uint256,uint256,uint256) (runs: 1001, μ: 12566, ~: 12501)
+[PASS] testFuzz_validateAlpha_consistent_with_liquidityParameter(uint256) (runs: 1000, μ: 15474, ~: 15593)
+[PASS] test_liquidityParameter_asymmetric_binary() (gas: 7916)
+[PASS] test_liquidityParameter_five_outcomes() (gas: 9711)
+[PASS] test_liquidityParameter_formula_invariant() (gas: 8417)
+[PASS] test_liquidityParameter_max_alpha() (gas: 7834)
+[PASS] test_liquidityParameter_min_alpha() (gas: 7965)
+[PASS] test_liquidityParameter_one_nonzero_quantity() (gas: 8457)
+[PASS] test_liquidityParameter_reverts_all_zeros() (gas: 11032)
+[PASS] test_liquidityParameter_reverts_alpha_above_max() (gas: 10154)
+[PASS] test_liquidityParameter_reverts_alpha_below_min() (gas: 9889)
+[PASS] test_liquidityParameter_reverts_alpha_zero() (gas: 10571)
+[PASS] test_liquidityParameter_reverts_array_too_large() (gas: 38657)
+[PASS] test_liquidityParameter_reverts_empty_array() (gas: 9870)
+[PASS] test_liquidityParameter_scales_with_alpha() (gas: 13226)
+[PASS] test_liquidityParameter_scales_with_quantity() (gas: 13526)
+[PASS] test_liquidityParameter_symmetric_binary() (gas: 7953)
+[PASS] test_validateAlpha_returns_false_above_max() (gas: 6503)
+[PASS] test_validateAlpha_returns_false_below_min() (gas: 5770)
+[PASS] test_validateAlpha_returns_false_for_zero() (gas: 6371)
+[PASS] test_validateAlpha_returns_true_for_valid_alpha() (gas: 16469)
+[PASS] test_validateQuantities_invalid_all_zeros() (gas: 7873)
+[PASS] test_validateQuantities_invalid_empty_array() (gas: 6842)
+[PASS] test_validateQuantities_invalid_exceeds_max_outcomes() (gas: 36346)
+[PASS] test_validateQuantities_invalid_single_element() (gas: 7138)
+[PASS] test_validateQuantities_valid_binary_market() (gas: 7635)
+[PASS] test_validateQuantities_valid_exactly_max_outcomes() (gas: 55805)
+[PASS] test_validateQuantities_valid_multi_outcome() (gas: 12053)
+[PASS] test_validateQuantities_valid_one_nonzero() (gas: 7360)
+Suite result: ok. 29 passed; 0 failed; 0 skipped; finished in 130.26ms (178.29ms CPU time)
+
+Ran 31 tests for test/LSMath/LSMath.Primitives.t.sol:LSMathPrimitivesTest
+[PASS] testFuzz_divScale_inverse_of_mulScale(uint256,uint256) (runs: 1001, μ: 10403, ~: 10461)
+[PASS] testFuzz_exp_result_always_gte_one(uint256) (runs: 1001, μ: 14214, ~: 8995)
+[PASS] testFuzz_exp_result_never_zero(uint256) (runs: 1001, μ: 14426, ~: 9207)
+[PASS] testFuzz_mulScale_commutativity(uint256,uint256) (runs: 1000, μ: 9413, ~: 9828)
+[PASS] test_divScale_basic_division() (gas: 6495)
+[PASS] test_divScale_identity_divisor() (gas: 6935)
+[PASS] test_divScale_less_than_one() (gas: 6709)
+[PASS] test_divScale_reverts_on_zero_divisor() (gas: 9223)
+[PASS] test_divScale_self_division() (gas: 6251)
+[PASS] test_divScale_zero_numerator_returns_zero() (gas: 6244)
+[PASS] test_exp_at_max_boundary_succeeds() (gas: 30833)
+[PASS] test_exp_ln2_approx_two() (gas: 15704)
+[PASS] test_exp_ln_inverse_roundtrip() (gas: 31654)
+[PASS] test_exp_monotone_increasing() (gas: 20151)
+[PASS] test_exp_one_approx_e() (gas: 14290)
+[PASS] test_exp_positive_input_greater_than_one() (gas: 37810)
+[PASS] test_exp_reverts_above_max_input() (gas: 8651)
+[PASS] test_exp_zero_returns_one() (gas: 6000)
+[PASS] test_ln_e_approx_one() (gas: 23972)
+[PASS] test_ln_exp_inverse_roundtrip() (gas: 33584)
+[PASS] test_ln_large_input_succeeds() (gas: 22057)
+[PASS] test_ln_monotone_increasing() (gas: 34852)
+[PASS] test_ln_one_returns_zero() (gas: 6058)
+[PASS] test_ln_reverts_on_below_scale() (gas: 8807)
+[PASS] test_ln_reverts_on_one_wei() (gas: 8477)
+[PASS] test_ln_reverts_on_zero() (gas: 8567)
+[PASS] test_ln_two_approx_ln2_constant() (gas: 20001)
+[PASS] test_mulScale_basic_multiplication() (gas: 6187)
+[PASS] test_mulScale_fractional_operand() (gas: 6517)
+[PASS] test_mulScale_identity() (gas: 6275)
+[PASS] test_mulScale_small_fractions() (gas: 6712)
+Suite result: ok. 31 passed; 0 failed; 0 skipped; finished in 249.03ms (512.66ms CPU time)
+
+Ran 21 tests for test/LSMath/LSMath.Trading.t.sol:LSMathTradingTest
+[PASS] testFuzz_calculateTradeCost_buying_always_positive(uint256,uint256,uint256) (runs: 1001, μ: 46049, ~: 46065)
+[PASS] testFuzz_hasOutcomeIndependentProfit_consistent_return(uint256,uint256,uint256) (runs: 1000, μ: 45363, ~: 45516)
+[PASS] test_calculateTradeCost_buy_sell_sign_flip() (gas: 86162)
+[PASS] test_calculateTradeCost_buying_is_positive() (gas: 48287)
+[PASS] test_calculateTradeCost_larger_buy_costs_more() (gas: 86776)
+[PASS] test_calculateTradeCost_multi_outcome_buying() (gas: 67973)
+[PASS] test_calculateTradeCost_reverts_invalid_alpha() (gas: 11059)
+[PASS] test_calculateTradeCost_reverts_length_mismatch() (gas: 11607)
+[PASS] test_calculateTradeCost_selling_is_negative() (gas: 44909)
+[PASS] test_calculateTradeCost_zero_trade_zero_cost() (gas: 35150)
+[PASS] test_calculateWorstCaseLoss_at_initial_state_equals_max_q() (gas: 35612)
+[PASS] test_calculateWorstCaseLoss_no_revert_after_trade() (gas: 45110)
+[PASS] test_calculateWorstCaseLoss_non_negative() (gas: 48094)
+[PASS] test_calculateWorstCaseLoss_reverts_empty_current() (gas: 10600)
+[PASS] test_calculateWorstCaseLoss_reverts_empty_initial() (gas: 10755)
+[PASS] test_calculateWorstCaseLoss_reverts_length_mismatch() (gas: 11851)
+[PASS] test_hasOutcomeIndependentProfit_after_large_volume() (gas: 41590)
+[PASS] test_hasOutcomeIndependentProfit_consistency() (gas: 44785)
+[PASS] test_hasOutcomeIndependentProfit_no_profit_at_initial_state() (gas: 35408)
+[PASS] test_hasOutcomeIndependentProfit_reverts_empty_current() (gas: 10866)
+[PASS] test_hasOutcomeIndependentProfit_reverts_length_mismatch() (gas: 11434)
+Suite result: ok. 21 passed; 0 failed; 0 skipped; finished in 438.91ms (702.68ms CPU time)
+
+Ran 44 tests for test/LSMath/LSMath.CostAndPricing.t.sol:LSMathCostAndPricingTest
+[PASS] testFuzz_calculateTradeCostDetailed_consistent(uint256,uint256,uint256,uint256,uint256) (runs: 1000, μ: 125879, ~: 131084)
+[PASS] testFuzz_calculateWorstCaseLossFromCosts_consistent(uint256,uint256,uint256,uint256,uint256) (runs: 1000, μ: 107871, ~: 112091)
+[PASS] testFuzz_costFunction_lower_bound(uint256,uint256,uint256) (runs: 1001, μ: 28832, ~: 30095)
+[PASS] testFuzz_prices_symmetric_equal(uint256,uint256) (runs: 1000, μ: 28430, ~: 28492)
+[PASS] testFuzz_sumOfPrices_always_above_one(uint256,uint256,uint256) (runs: 1001, μ: 32731, ~: 33994)
+[PASS] test_calculateTradeCostDetailed_costTo_matches_costFunction() (gas: 77671)
+[PASS] test_calculateTradeCostDetailed_five_outcome_consistency() (gas: 182481)
+[PASS] test_calculateTradeCostDetailed_positive_on_buy() (gas: 45216)
+[PASS] test_calculateTradeCostDetailed_reverts_array_length_mismatch() (gas: 11824)
+[PASS] test_calculateTradeCostDetailed_tradeCost_matches_calculateTradeCost() (gas: 86499)
+[PASS] test_calculateTradeCostDetailed_zero_on_noop() (gas: 52912)
+[PASS] test_calculateWorstCaseLossFromCosts_branch_cost_below_maxQ() (gas: 8466)
+[PASS] test_calculateWorstCaseLossFromCosts_correct_maxQ_selection() (gas: 8516)
+[PASS] test_calculateWorstCaseLossFromCosts_five_outcome_consistency() (gas: 165095)
+[PASS] test_calculateWorstCaseLossFromCosts_integration_with_tradeCostDetailed() (gas: 109685)
+[PASS] test_calculateWorstCaseLossFromCosts_matches_calculateWorstCaseLoss() (gas: 94110)
+[PASS] test_calculateWorstCaseLossFromCosts_reverts_empty_quantities() (gas: 10419)
+[PASS] test_calculateWorstCaseLossFromCosts_zero_when_profitable() (gas: 42401)
+[PASS] test_costFunction_always_positive() (gas: 21279)
+[PASS] test_costFunction_exceeds_max_quantity() (gas: 20712)
+[PASS] test_costFunction_five_equal_outcomes() (gas: 28476)
+[PASS] test_costFunction_imbalanced_market_no_overflow() (gas: 111038)
+[PASS] test_costFunction_known_value_symmetric_binary() (gas: 23508)
+[PASS] test_costFunction_large_market_no_overflow() (gas: 125975)
+[PASS] test_costFunction_lower_bound_always_max_qi() (gas: 83796)
+[PASS] test_costFunction_monotone_increasing_with_quantity() (gas: 47675)
+[PASS] test_costFunction_reverts_all_zero_quantities() (gas: 10672)
+[PASS] test_costFunction_reverts_empty_array() (gas: 10046)
+[PASS] test_costFunction_reverts_invalid_alpha() (gas: 9885)
+[PASS] test_getAllPrices_all_prices_positive() (gas: 33503)
+[PASS] test_getAllPrices_correct_length() (gas: 36107)
+[PASS] test_getAllPrices_five_equal_outcomes_equal_prices() (gas: 42854)
+[PASS] test_getAllPrices_higher_quantity_higher_price() (gas: 33594)
+[PASS] test_getAllPrices_imbalanced_dominant_gets_higher_price() (gas: 46254)
+[PASS] test_getAllPrices_large_market_no_overflow() (gas: 248231)
+[PASS] test_getAllPrices_symmetric_market_equal_prices() (gas: 27916)
+[PASS] test_getPrice_matches_getAllPrices_index() (gas: 92869)
+[PASS] test_getPrice_reverts_invalid_alpha() (gas: 11074)
+[PASS] test_getPrice_reverts_invalid_index() (gas: 10712)
+[PASS] test_multi_outcome_integration_workflow() (gas: 182564)
+[PASS] test_sumOfPrices_always_greater_than_one() (gas: 24902)
+[PASS] test_sumOfPrices_consistent_with_getAllPrices() (gas: 64262)
+[PASS] test_sumOfPrices_increases_with_alpha() (gas: 45433)
+[PASS] test_sumOfPrices_within_theoretical_upper_bound() (gas: 24555)
+Suite result: ok. 44 passed; 0 failed; 0 skipped; finished in 1.31s (1.90s CPU time)
+
+╭--------------------------------------------------------------+-----------------+-------+--------+--------+---------╮
+| test/LSMath/harness/LSMathHarness.sol:LSMathHarness Contract |                 |       |        |        |         |
++====================================================================================================================+
+| Deployment Cost                                              | Deployment Size |       |        |        |         |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| 1016555                                                      | 4485            |       |        |        |         |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+|                                                              |                 |       |        |        |         |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| Function Name                                                | Min             | Avg   | Median | Max    | # Calls |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| calculateTradeCost                                           | 1508            | 40248 | 38085  | 62649  | 524     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| calculateTradeCostDetailed                                   | 1637            | 43720 | 45994  | 69153  | 264     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| calculateWorstCaseLoss                                       | 1255            | 43656 | 46275  | 72302  | 266     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| calculateWorstCaseLossFromCosts                              | 865             | 1502  | 1526   | 2203   | 264     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| costFunction                                                 | 761             | 21931 | 22921  | 102126 | 1049    |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| divScale                                                     | 516             | 790   | 792    | 792    | 262     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| exp                                                          | 446             | 7680  | 1889   | 25377  | 524     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| getAllPrices                                                 | 17517           | 18467 | 17517  | 190280 | 265     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| getPrice                                                     | 913             | 13760 | 13867  | 26394  | 4       |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| hasOutcomeIndependentProfit                                  | 1114            | 37000 | 37392  | 39776  | 261     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| liquidityParameter                                           | 844             | 1322  | 1623   | 7758   | 529     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| ln                                                           | 230             | 9094  | 10981  | 16205  | 11      |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| mulScale                                                     | 528             | 528   | 528    | 528    | 504     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| sumOfPrices                                                  | 17741           | 25411 | 26489  | 29060  | 261     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| validateAlpha                                                | 280             | 295   | 309    | 309    | 263     |
+|--------------------------------------------------------------+-----------------+-------+--------+--------+---------|
+| validateQuantities                                           | 743             | 5513  | 1338   | 27427  | 8       |
+╰--------------------------------------------------------------+-----------------+-------+--------+--------+---------╯
+
+
+Ran 4 test suites in 1.47s (2.12s CPU time): 125 tests passed, 0 failed, 0 skipped (125 total tests)
