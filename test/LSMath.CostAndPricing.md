@@ -213,11 +213,3 @@ All happy-path and fuzz tests above use binary markets. These three tests confir
 
 ---
 
-## Debugging Tips
-
-- **Large market test reverts with `ExponentialOverflow`** → the Log-Sum-Exp stabilization (`maxRatio` subtraction before `exp()`) is missing or incorrectly applied in either `costFunction` or `getAllPrices`.
-- **Symmetric prices are not equal** → the `weightedSum` or `weightedI` calculation in `getAllPrices` has a scaling error.
-- **`sumOfPrices` exceeds theoretical upper bound significantly** → `alphaTerm` is miscalculated; check the `adjustedLn` computation includes the `maxRatio` offset correctly.
-- **`C(q) < max(qi)` (Lemma 4.5 violated)** → a fundamental overflow or underflow in the cost formula; check `ln(sumExp)` is not returning too-small a value.
-- **`tradeCost` from detailed variant != `calculateTradeCost`** → the two functions diverged; confirm both use identical cost arithmetic and the same int256 overflow guards.
-- **`calculateWorstCaseLossFromCosts` != `calculateWorstCaseLoss`** → the `maxQ` scan or the surplus/loss branching logic differs; re-verify the two branches against Prop. 4.9.
