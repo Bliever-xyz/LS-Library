@@ -100,8 +100,3 @@ The consistency fuzz test is the most important: it proves the two functions agr
 
 ---
 
-## Debugging Tips
-
-- **`InvalidAlpha` from downstream** (e.g., `costFunction`) with a valid-seeming alpha? Re-check whether alpha was passed in raw or scaled. `5%` must be `5e16`, NOT `5`.
-- **`ZeroQuantitySum` in production** when quantities look non-zero? Look for truncation: if `(alpha * sumQ) / SCALE == 0` (i.e., quantities are too small relative to SCALE), the second check `if (b == 0) revert ZeroQuantitySum()` fires.
-- **`InvalidOutcomeIndex` on a large market?** The limit is 100 outcomes (`MAX_OUTCOMES`). This fires in `liquidityParameter`, not just on index access.
