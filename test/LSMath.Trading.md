@@ -147,10 +147,3 @@ At `q == q0`, revenue = `C(q0) - max(q0) - C(q0) = -max(q0) < 0`. So the market 
 | Return type consistency: profit=0 when hasProfit=false | All consistency tests + fuzz |
 
 ---
-
-## Debugging Tips
-
-- **`calculateTradeCost` returns 0 for a non-zero trade** → `costFunction` is returning the same value for both states, likely because the quantity difference is too small to register after fixed-point scaling.
-- **`calculateWorstCaseLoss` returns unexpected values** → Trace through the conditional branches. The formula has two cases (when `costCurrent < maxQ` and when `costCurrent >= maxQ`). Logging `costCurrent`, `costInitial`, and `maxQ` separately is the fastest way to debug.
-- **`hasOutcomeIndependentProfit` returns `hasProfit=true` immediately** → Check that `q0` (initial quantities) is the actual initial state before any trades; if `q0` is passed as the current state, the calculation is inverted.
-- **`int256` casting reverts in `calculateTradeCost`** → This is **Fix 3** from the developer documentation. Market cost values have exceeded `type(int256).max ≈ 5.7e76`. This indicates quantities are unrealistically large.
