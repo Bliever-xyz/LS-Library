@@ -824,16 +824,3 @@ function testFuzz_sumOfPrices_bounds(
     assertLe(s, upperBound + 1e12, "Sum of prices exceeds upper bound");
 }
 ```
-
-### Gas Benchmarking Targets
-
-| Function | Expected Gas Range | Notes |
-|---|---|---|
-| `exp(1e18)` | 2,000–3,500 | Typical input, early exit |
-| `exp(100e18)` | 7,000–12,000 | Many range reduction steps |
-| `ln(2e18)` | 3,000–5,000 | Standard case |
-| `liquidityParameter(n=10)` | 4,000–6,000 | Loop over 10 outcomes |
-| `costFunction(n=10)` | 30,000–60,000 | Includes 10× exp + ln |
-| `getAllPrices(n=10)` | 60,000–120,000 | 10× exp, 3 loops |
-| `costFunction(n=100)` | 300,000–600,000 | 100× exp + ln |
-| `getAllPrices(n=100)` | 500,000–1,000,000 | 100× exp, 3 loops, 100× price computation |
