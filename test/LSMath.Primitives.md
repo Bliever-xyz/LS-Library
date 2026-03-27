@@ -135,10 +135,3 @@ These are **cross-validation tests** — they catch the scenario where `exp()` a
 | `divScale` roundtrip | `1e3` absolute | One integer division rounding step |
 
 ---
-
-## Debugging Tips
-
-- If `test_exp_ln2_approx_two` fails → the `LN_2` constant value is wrong or range reduction is broken.
-- If `test_ln_e_approx_one` fails → the fractional-part binary search has precision issues.
-- If inverse roundtrip tests fail but individual tests pass → `exp` and `ln` are inconsistently calibrated.
-- If `mulScale` or `divScale` tests fail → check Solidity 0.8's built-in overflow (these functions have a custom check that is actually unreachable in 0.8.x; panic occurs first).
